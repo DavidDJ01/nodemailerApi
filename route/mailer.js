@@ -3,6 +3,10 @@ const nodeMailer = require("nodemailer")
 
 const route = express.Router()
 
+route.get("/invte", (req,res,next) => {
+    res.send(" Welcome to my team! (^-^)")
+})
+
 route.post("/sendmailer", async (req, res, next) => {
     var guest = {
         email: req.body.gmail,
