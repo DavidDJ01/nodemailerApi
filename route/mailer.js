@@ -3,6 +3,14 @@ const nodeMailer = require("nodemailer")
 
 const route = express.Router()
 
+route.get("/checkAccount", (req, res, next ) => {
+    res.send({
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASS: process.env.EMAIL_PASS ? "Có pass" : "Không có pass"
+  });
+} )
+
+
 route.get("/invte", (req,res,next) => {
     res.send(" Welcome to my team! (^-^)")
 })
