@@ -21,8 +21,10 @@ route.post("/sendmailer", async (req, res, next) => {
         hoTen: req.body.hoTen,
         sdt: req.body.sdt
     }
-    var transporter = nodeMailer.createTransport({
+    var  transporter = nodeMailer.createTransport({
         service: "gmail",
+        port: 465,
+        secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
@@ -31,6 +33,7 @@ route.post("/sendmailer", async (req, res, next) => {
              rejectUnauthorized: false
         }
     })
+
     await transporter.sendMail({
         from: "yen29012006@gmail.com",
         to: `chidao1090@gmail.com`,
