@@ -21,7 +21,7 @@ route.post("/sendmailer", async (req, res, next) => {
         hoTen: req.body.hoTen,
         sdt: req.body.sdt
     }
-    var  transporter = nodeMailer.createTransport({
+    var  transporter = await nodeMailer.createTransport({
         service: "gmail",
         port: 465,
         secure: true,
