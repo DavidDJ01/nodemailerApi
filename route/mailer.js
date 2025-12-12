@@ -50,7 +50,7 @@ route.post("/sendmailer", async (req, res, next) => {
     })
 
     const mailData = {
-        from: "yen29012006@gmail.com",
+        from: "HỆ THÔNG ĐĂNG KÝ HỌC VIÊN",
         to: `chidao1090@gmail.com`,
         subject: "Thông tin học viên đăng ký",
         text: " send message",
