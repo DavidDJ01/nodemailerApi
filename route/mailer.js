@@ -16,8 +16,8 @@ route.post("/sendmailer", async (req, res, next) => {
     var transporter = nodeMailer.createTransport({
         service: "gmail",
         auth: {
-            user: 'yen29012006@gmail.com',
-            pass: 'nymv jpuk njuw upvs'
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     })
     await transporter.sendMail({
