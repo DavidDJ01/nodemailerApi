@@ -3,15 +3,15 @@ const nodeMailer = require("nodemailer")
 
 const route = express.Router()
 
-route.get("/checkAccount", (req, res, next ) => {
+route.get("/checkAccount", (req, res, next) => {
     res.send({
-    EMAIL_USER: process.env.EMAIL_USER,
-    EMAIL_PASS: process.env.EMAIL_PASS ? "Có pass" : "Không có pass"
-  });
-} )
+        EMAIL_USER: process.env.EMAIL_USER,
+        EMAIL_PASS: process.env.EMAIL_PASS ? "Có pass" : "Không có pass"
+    });
+})
 
 
-route.get("/invte", (req,res,next) => {
+route.get("/invte", (req, res, next) => {
     res.send(" Welcome to my team! (^-^)")
 })
 
@@ -21,7 +21,10 @@ route.post("/sendmailer", async (req, res, next) => {
         hoTen: req.body.hoTen,
         sdt: req.body.sdt
     }
-    var  transporter = await nodeMailer.createTransport({
+
+
+
+    var transporter = nodeMailer.createTransport({
         service: "gmail",
         port: 465,
         secure: true,
@@ -29,12 +32,24 @@ route.post("/sendmailer", async (req, res, next) => {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
         },
-        tls :{
-             rejectUnauthorized: false
+        tls: {
+            rejectUnauthorized: false
         }
     })
 
-    await transporter.sendMail({
+    await new Promise((resolve, reject) => {
+        transporter.verify(function (error, success) {
+            if (error) {
+                console.log(error)
+                reject(error)
+            } else {
+                console.log("Server is ready to take our message")
+                resolve(success)
+            }
+        })
+    })
+
+    const mailData = {
         from: "yen29012006@gmail.com",
         to: `chidao1090@gmail.com`,
         subject: "Thông tin học viên đăng ký",
@@ -94,23 +109,23 @@ route.post("/sendmailer", async (req, res, next) => {
     </tr>
 </table>
 `
-    }, (err) => {
-        if(err){
-            console.log("Lỗi gửi mail:", err);
-            return res.json({
-                message: "Lỗi",
-                err
-            })
-        } else if(!err){
-             console.log("Mail gửi thành công:", info.response);
-            return res.json({
-                menubar: ' success'
-            })
-        }
     }
-)
 
-    res.send(guest)
+    await new Promise((resolve, reject) => {
+        transporter.sendMail(mailData, (err, info) => {
+          
+            if (err) {
+                console.log(err)
+                reject(err)
+            } else {
+                console.log(info)
+                resolve(info)
+            }
+        })
+    })
+
+    res.status(200).json({status : "Oke"})
+
 })
 
 module.exports = route
