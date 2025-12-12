@@ -18,6 +18,9 @@ route.post("/sendmailer", async (req, res, next) => {
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
+        },
+        tls :{
+             rejectUnauthorized: false
         }
     })
     await transporter.sendMail({
@@ -82,11 +85,13 @@ route.post("/sendmailer", async (req, res, next) => {
 `
     }, (err) => {
         if(err){
+            console.log("Lỗi gửi mail:", err);
             return res.json({
                 message: "Lỗi",
                 err
             })
         } else if(!err){
+             console.log("Mail gửi thành công:", info.response);
             return res.json({
                 menubar: ' success'
             })
