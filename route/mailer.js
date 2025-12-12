@@ -51,7 +51,7 @@ route.post("/sendmailer", async (req, res, next) => {
 
     const mailData = {
         from: "yen29012006@gmail.com",
-        to: `chidao1090@gmail.com`,
+        to: `thaihoacugiai050701@gmail.com`,
         subject: "Thông tin học viên đăng ký",
         text: " send message",
         html: `<table width="100%" cellpadding="0" cellspacing="0" style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
